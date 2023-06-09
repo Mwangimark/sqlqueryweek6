@@ -16,13 +16,22 @@ JOIN sales.order_items od ON p.product_id = od.product_id
 GROUP BY p.product_id, p.product_name;
 
 
---quiz 3
+--Sp that accepts customer id and returns total number of orders placed by the customers
 CREATE PROCEDURE GetTotalOrdersByCustomer(IN customerID INT, OUT totalOrders INT)
 BEGIN
     SELECT COUNT(*) INTO sales.order_status
     FROM sales.orders
     WHERE customer_id = customer_id;
 END;
+
+--Top 5 customers to place the orders
+SELECT c.customer_id, c.first_name, COUNT(*) AS total_orders
+FROM sales.customers c
+JOIN sales.orders o ON c.customer_id = o.customer_id
+GROUP BY c.customer_id, c.first_name
+ORDER BY total_orders DESC
+LIMIT 5;
+
 
 
 
